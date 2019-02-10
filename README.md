@@ -4,6 +4,8 @@
 null is a library with reasonable options for dealing with nullable SQL and JSON values
 
 There are two packages: `null` and its subpackage `zero`. 
+mikecongdon1golang/null aims to extend guregu's package in a slightly rougher way. I'll aim to make no breaking changes, but recommend that you should use Guregu's and fork from there/give credit there. It's a wonderful project that I'm reaping the benefits of. Thank you Guregu!
+The rest of this documentation is their work. My additoins have been minor, and primarily in the zero package.
 
 Types in `null` will only be considered null on null input, and will JSON encode to `null`. If you need zero and null be considered separate values, use these.
 
