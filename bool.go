@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"strings"
 )
 
 // Bool is a nullable bool.
@@ -36,6 +37,25 @@ func BoolFromPtr(b *bool) Bool {
 		return NewBool(false, false)
 	}
 	return NewBool(*b, true)
+}
+
+// BoolFromPtr creates a new Bool that will be null if f is nil.
+func BoolFromString(str string) Bool {
+	switch strings.ToLower(str) {
+	case "", "null":
+		return NewBool(false, false)
+	case "true":
+		return NewBool(true, true)
+	case "false":
+		return NewBool(false, true)
+	case "1":
+		return NewBool(true, true)
+	case "0":
+		return NewBool(false, true)
+	default:
+		return NewBool(false, false)
+	}
+	return NewBool(false, false)
 }
 
 // ValueOrZero returns the inner value if valid, otherwise false.
@@ -80,6 +100,10 @@ func (b *Bool) UnmarshalText(text []byte) error {
 	case "true":
 		b.Bool = true
 	case "false":
+		b.Bool = false
+	case "1":
+		b.Bool = true
+	case "0":
 		b.Bool = false
 	default:
 		b.Valid = false
