@@ -60,6 +60,27 @@ func BoolFromString(str string) Bool {
 	return NewBool(false, false)
 }
 
+// BoolFromStringExist creates a new Bool
+//that will be false if str is 0,false and will be not valid
+//if str is "" or nonexist, or anything other than what's specified.
+func BoolFromStringExist(str string, b bool) Bool {
+	if b {
+		switch strings.ToLower(str) {
+		case "true":
+			return NewBool(true, true)
+		case "false":
+			return NewBool(false, true)
+		case "1":
+			return NewBool(true, true)
+		case "0":
+			return NewBool(false, true)
+		default:
+			return NewBool(false, true)
+		}
+	}
+	return NewBool(false, false)
+}
+
 // UnmarshalJSON implements json.Unmarshaler.
 // "false" will be considered a null Bool.
 // It also supports unmarshalling a sql.NullBool.
