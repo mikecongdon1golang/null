@@ -43,7 +43,13 @@ func BoolFromString(s string) Bool {
 	if s == "" {
 		return NewBool(false, false)
 	}
-	return NewBool(*s, true)
+	if s == "1" || s == "true" {
+		return NewBool(true, true)
+	} else if (s == "0" || s == "false" ) {
+		return NewBool(false, true)
+	}
+	return NewBool(false, false)
+
 }
 
 // UnmarshalJSON implements json.Unmarshaler.
