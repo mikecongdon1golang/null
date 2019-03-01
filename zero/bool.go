@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
-	"strings"
 )
 
 // Bool is a nullable bool. False input is considered null.
@@ -39,46 +38,12 @@ func BoolFromPtr(b *bool) Bool {
 	return NewBool(*b, true)
 }
 
-// BoolFromString creates a new Bool
-//that will be false if str is 0,false and will be not valid
-//if str is "" or nonexist, or anything other than what's specified.
-func BoolFromString(str string) Bool {
-	switch strings.ToLower(str) {
-	case "", "null":
-		return NewBool(false, false)
-	case "true":
-		return NewBool(true, true)
-	case "false":
-		return NewBool(false, true)
-	case "1":
-		return NewBool(true, true)
-	case "0":
-		return NewBool(false, true)
-	default:
+// BoolFromPtr creates a new Bool that be null if b is nil.
+func BoolFromString(s string) Bool {
+	if s == "" {
 		return NewBool(false, false)
 	}
-	return NewBool(false, false)
-}
-
-// BoolFromStringExist creates a new Bool
-//that will be false if str is 0,false and will be not valid
-//if str is "" or nonexist, or anything other than what's specified.
-func BoolFromStringExist(str string, b bool) Bool {
-	if b {
-		switch strings.ToLower(str) {
-		case "true":
-			return NewBool(true, true)
-		case "false":
-			return NewBool(false, true)
-		case "1":
-			return NewBool(true, true)
-		case "0":
-			return NewBool(false, true)
-		default:
-			return NewBool(false, true)
-		}
-	}
-	return NewBool(false, false)
+	return NewBool(*s, true)
 }
 
 // UnmarshalJSON implements json.Unmarshaler.
