@@ -51,6 +51,13 @@ func BoolFromString(s string) Bool {
 	return NewBool(false, false)
 
 }
+// BoolFromPtr creates a new Bool that be null if b is nil.
+func BoolFromStringExist(s string) Bool {
+	if s == "" {
+		return NewBool(false, false)
+	}
+	return NewBool(true, true)
+}
 
 // UnmarshalJSON implements json.Unmarshaler.
 // "false" will be considered a null Bool.
