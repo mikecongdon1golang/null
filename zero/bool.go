@@ -52,8 +52,8 @@ func BoolFromString(s string) Bool {
 
 }
 // BoolFromPtr creates a new Bool that be null if b is nil.
-func BoolFromStringExist(s string) Bool {
-	if s == "" {
+func BoolFromStringExist(s string, b bool) Bool {
+	if s == "" || b == false {
 		return NewBool(false, false)
 	}
 	return NewBool(true, true)
