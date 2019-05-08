@@ -138,6 +138,24 @@ func (t *Time) String() string {
 	return t.Time.Format("2006-01-02 15:04:05")
 }
 
+// StringDate changes this Time's value and
+// sets it to be non-null.
+func (t *Time) StringDate() string {
+	if t.IsZero() {
+		return ""
+	}
+	return t.Time.Format("2006-01-02")
+}
+
+// StringTime changes this Time's value and
+// sets it to be non-null.
+func (t *Time) StringTime() string {
+	if t.IsZero() {
+		return ""
+	}
+	return t.Time.Format("15:04:05")
+}
+
 // SetValid changes this Time's value and
 // sets it to be non-null.
 func (t *Time) SetValid(v time.Time) {
