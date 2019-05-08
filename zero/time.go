@@ -129,6 +129,15 @@ func (t *Time) UnmarshalText(text []byte) error {
 	return nil
 }
 
+// String changes this Time's value and
+// sets it to be non-null.
+func (t *Time) String() string {
+	if t.IsZero() {
+		return ""
+	}
+	return t.Time.Format("2006-01-02 15:04:05")
+}
+
 // SetValid changes this Time's value and
 // sets it to be non-null.
 func (t *Time) SetValid(v time.Time) {
