@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"reflect"
+	"strconv"
 )
 
 // String is a nullable string.
@@ -40,6 +41,12 @@ func StringFromPtr(s *string) String {
 		return NewString("", false)
 	}
 	return NewString(*s, *s != "")
+}
+
+// StringFromInt creates a new String from an Int64 that will be null if s is blank.
+func StringFromInt(i int64) String {
+	s := strconv.FormatInt(i, 10)
+	return NewString(s, s != "")
 }
 
 // UnmarshalJSON implements json.Unmarshaler.
