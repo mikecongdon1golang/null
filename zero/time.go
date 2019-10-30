@@ -176,3 +176,8 @@ func (t Time) Ptr() *time.Time {
 func (t Time) IsZero() bool {
 	return !t.Valid || t.Time.IsZero()
 }
+
+// Now returns true for null or zero Times, for potential future omitempty support.
+func TimeNow() Time {
+	return TimeFrom(time.Now())
+}
