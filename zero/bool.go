@@ -38,6 +38,21 @@ func BoolFromPtr(b *bool) Bool {
 	return NewBool(*b, true)
 }
 
+// NewBoolFromString creates a new Int from a string
+func NewBoolFromString(s string, valid bool) Bool {
+	if valid {
+		if s == "" {
+			return NewBool(false, false)
+		}
+		if s == "1" || s == "true" {
+			return NewBool(true, true)
+		} else if s == "0" || s == "false" {
+			return NewBool(false, true)
+		}
+	}
+	return NewBool(false, false)
+}
+
 // BoolFromPtr creates a new Bool that be null if b is nil.
 func BoolFromString(s string) Bool {
 	if s == "" {
