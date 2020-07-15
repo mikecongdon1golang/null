@@ -38,6 +38,21 @@ func BoolFromPtr(b *bool) Bool {
 	return NewBool(*b, true)
 }
 
+// NewBoolFromString creates a new Int from a string
+func NewBoolFromString(s string, valid bool) Bool {
+	if valid {
+		if s == "" {
+			return NewBool(false, false)
+		}
+		if s == "1" || s == "true" {
+			return NewBool(true, true)
+		} else if s == "0" || s == "false" {
+			return NewBool(false, true)
+		}
+	}
+	return NewBool(false, false)
+}
+
 // BoolFromPtr creates a new Bool that be null if b is nil.
 func BoolFromString(s string) Bool {
 	if s == "" {
@@ -45,12 +60,13 @@ func BoolFromString(s string) Bool {
 	}
 	if s == "1" || s == "true" {
 		return NewBool(true, true)
-	} else if (s == "0" || s == "false" ) {
+	} else if s == "0" || s == "false" {
 		return NewBool(false, true)
 	}
 	return NewBool(false, false)
 
 }
+
 // BoolFromPtr creates a new Bool that be null if b is nil.
 func BoolFromStringExist(s string, b bool) Bool {
 	if s == "" || b == false {
@@ -139,4 +155,12 @@ func (b Bool) Ptr() *bool {
 // IsZero returns true for null or zero Bools, for future omitempty support (Go 1.4?)
 func (b Bool) IsZero() bool {
 	return !b.Valid || !b.Bool
+}
+
+// OverwriteWithIfValid returns nothing. Used for type conversion from sql.Nullstring to zero
+func (s *Bool) OverwriteWithIfValid(st bool, v bool) {
+	if v {
+		s.Bool = st
+		s.Valid = v
+	}
 }

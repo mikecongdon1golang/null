@@ -108,3 +108,11 @@ func (s String) Ptr() *string {
 func (s String) IsZero() bool {
 	return !s.Valid || s.String == ""
 }
+
+// OverwriteWithIfValid returns nothing. Used for type conversion from sql.Nullstring to zero
+func (s *String) OverwriteWithIfValid(st string, v bool) {
+	if v {
+		s.String = st
+		s.Valid = v
+	}
+}

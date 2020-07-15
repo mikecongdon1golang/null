@@ -181,3 +181,11 @@ func (t Time) IsZero() bool {
 func TimeNow() Time {
 	return TimeFrom(time.Now())
 }
+
+// OverwriteWithIfValid returns nothing. Used for type conversion from sql.Nullstring to zero
+func (s *Time) OverwriteWithIfValid(st time.Time, v bool) {
+	if v {
+		s.Time = st
+		s.Valid = v
+	}
+}

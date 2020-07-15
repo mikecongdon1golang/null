@@ -39,8 +39,40 @@ func IntFromPtr(i *int64) Int {
 	return n
 }
 
-// NewInt creates a new Int from a string
+// NewInt creates a new Int from a string and a bool
 func NewIntFromString(i string, valid bool) Int {
+	if valid {
+		inter, err := strconv.Atoi(i)
+		if err != nil {
+			return Int{
+				NullInt64: sql.NullInt64{
+					Int64: 0,
+					Valid: false,
+				},
+			}
+		}
+		in := int64(inter)
+		return Int{
+			NullInt64: sql.NullInt64{
+				Int64: in,
+				Valid: valid,
+			},
+		}
+	}
+	return Int{
+		NullInt64: sql.NullInt64{
+			Int64: 0,
+			Valid: false,
+		},
+	}
+}
+
+// IntFromString creates a new Int from a string
+func IntFromString(i string) Int {
+	valid := true
+	if i == "" {
+		valid = false
+	}
 	if valid {
 		inter, err := strconv.Atoi(i)
 		if err != nil {
@@ -152,4 +184,12 @@ func (i Int) Ptr() *int64 {
 // IsZero returns true for null or zero Ints, for future omitempty support (Go 1.4?)
 func (i Int) IsZero() bool {
 	return !i.Valid || i.Int64 == 0
+}
+
+// OverwriteWithIfValid returns nothing. Used for type conversion from sql.Nullstring to zero
+func (s *Int) OverwriteWithIfValid(st int64, v bool) {
+	if v {
+		s.Int64 = st
+		s.Valid = v
+	}
 }

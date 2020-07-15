@@ -130,3 +130,11 @@ func (f Float) Ptr() *float64 {
 func (f Float) IsZero() bool {
 	return !f.Valid || f.Float64 == 0
 }
+
+// OverwriteWithIfValid returns nothing. Used for type conversion from sql.Nullstring to zero
+func (s *Float) OverwriteWithIfValid(st float64, v bool) {
+	if v {
+		s.Float64 = st
+		s.Valid = v
+	}
+}
